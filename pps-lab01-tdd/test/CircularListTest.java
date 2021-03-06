@@ -97,6 +97,19 @@ public class CircularListTest {
     }
 
     @Test
+    public void testCircularNextWithEqualsSelectStrategy() {
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+
+        // Find 2 times same value
+        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE)));
+        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE)));
+
+        // Find a near last element and then a near first one
+        assertEquals(Optional.of(SEQUENCE_SIZE-5), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE-5)));
+        assertEquals(Optional.of(5), circularList.next(new EqualsSelectStrategy(5)));
+    }
+
+    @Test
     public void testEmptyPrevious() {
         assertEquals(Optional.empty(), circularList.previous());
     }

@@ -31,15 +31,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        if (isEmpty())
-            return Optional.empty();
-
-        this.index++;
-
-        if (this.index == size())
-            this.index = 0;
-
-        return Optional.of(elements.get(this.index));
+        return next(new EachSelectStrategy());
     }
 
     @Override
