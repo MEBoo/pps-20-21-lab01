@@ -6,32 +6,40 @@ import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
     
-    private final List<Integer> items;
+    private final List<Integer> elements;
     private int index;
 
     public CircularListImpl() {
-        this.items = new ArrayList<>();
-        this.index = 0;
+        this.elements = new ArrayList<>();
+        this.index = -1;
     }
 
     @Override
     public void add(int element) {
-
+        this.elements.add(element);
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.elements.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return elements.isEmpty();
     }
 
     @Override
     public Optional<Integer> next() {
-        return Optional.empty();
+        if (isEmpty())
+            return Optional.empty();
+
+        this.index++;
+
+        if (this.index == size())
+            this.index = 0;
+
+        return Optional.of(elements.get(this.index));
     }
 
     @Override
@@ -41,7 +49,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void reset() {
-
+        this.index=0;
     }
 
     @Override
