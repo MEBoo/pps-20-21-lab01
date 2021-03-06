@@ -4,7 +4,7 @@ package lab01.example.model;
  * This interface defines the concept of a very basic bank account.
  */
 public interface BankAccount {
-
+    
     /**
      * Allows to know who is the holder of this bank account
      * @return the AccountHolder instance related to this bank account.
@@ -16,6 +16,12 @@ public interface BankAccount {
      * @return the current balance
      */
     double getBalance();
+
+    /**
+     * Returns the transaction fee of the bank account
+     * @return the transaction fee
+     */
+    //double getTransactionFee();
 
     /**
      * Allows the deposit of an amount on the account, if the given usrID corresponds to the register holder ID
