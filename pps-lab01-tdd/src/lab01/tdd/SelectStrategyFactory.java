@@ -1,6 +1,8 @@
 package lab01.tdd;
 
 public interface SelectStrategyFactory {
+
+    SelectStrategy createEachStrategy();
     
     SelectStrategy createEvenStrategy();
 

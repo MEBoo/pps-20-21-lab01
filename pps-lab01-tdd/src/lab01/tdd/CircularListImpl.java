@@ -8,6 +8,7 @@ public class CircularListImpl implements CircularList {
     
     private final List<Integer> elements;
     private int index;
+    private final SelectStrategy eachSelectStrategy=new SelectStrategyFactoryImpl().createEachStrategy();
 
     public CircularListImpl() {
         this.elements = new ArrayList<>();
@@ -31,7 +32,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        return next(new EachSelectStrategy());
+        return next(eachSelectStrategy);
     }
 
     @Override
