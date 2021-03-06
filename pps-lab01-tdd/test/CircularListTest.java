@@ -1,5 +1,4 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
+import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -75,6 +74,26 @@ public class CircularListTest {
 
         for (int i=0;i<2*SEQUENCE_SIZE;i++)
             assertEquals(Optional.of(i%SEQUENCE_SIZE+1), circularList.next());
+    }
+
+    @Test
+    public void testNextWithEvenSelectStrategy() {
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+        assertEquals(Optional.of(2), circularList.next(new EvenSelectStrategy()));
+        assertEquals(Optional.of(4), circularList.next(new EvenSelectStrategy()));
+    }
+
+    @Test
+    public void testNextWithMultipleOfSelectStrategy() {
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+        assertEquals(Optional.of(3), circularList.next(new MultipleOfSelectStrategy(3)));
+        assertEquals(Optional.of(6), circularList.next(new MultipleOfSelectStrategy(3)));
+    }
+
+    @Test
+    public void testNextWithEqualsSelectStrategy() {
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+        assertEquals(Optional.of(5), circularList.next(new EqualsSelectStrategy(5)));
     }
 
     @Test
