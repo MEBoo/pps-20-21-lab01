@@ -13,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
 
+    static final int SEQUENCE_SIZE=100;
     private CircularList circularList;
+
 
     private void addSequenceOfIntegers(int number)
     {
@@ -44,8 +46,8 @@ public class CircularListTest {
 
     @Test
     public void testMultipleAdd() {
-        addSequenceOfIntegers(100);
-        assertEquals(100, circularList.size());
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+        assertEquals(SEQUENCE_SIZE, circularList.size());
     }
 
     @Test
@@ -56,30 +58,30 @@ public class CircularListTest {
 
     @Test
     public void testSimpleNext() {
-        addSequenceOfIntegers(100);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
         assertEquals(Optional.of(1), circularList.next());
     }
 
     @Test
     public void testMultipleNext() {
-        addSequenceOfIntegers(100);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
 
-        for (int i=0;i<200;i++)
-            assertEquals(Optional.of(i%100+1), circularList.next());
+        for (int i=0;i<2*SEQUENCE_SIZE;i++)
+            assertEquals(Optional.of(i%SEQUENCE_SIZE+1), circularList.next());
     }
 
     @Test
     public void testSimplePrevious() {
-        addSequenceOfIntegers(100);
-        assertEquals(Optional.of(100), circularList.previous());
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.previous());
     }
 
     @Test
     public void testMultiplePrevious() {
-        addSequenceOfIntegers(100);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
 
-        for (int i=0;i<200;i++)
-            assertEquals(Optional.of(i>=100?200-i:100-i), circularList.previous());
+        for (int i=0;i<2*SEQUENCE_SIZE;i++)
+            assertEquals(Optional.of(i>=SEQUENCE_SIZE?2*SEQUENCE_SIZE-i:SEQUENCE_SIZE-i), circularList.previous());
     }
 
 }
