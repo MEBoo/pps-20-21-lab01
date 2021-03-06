@@ -175,6 +175,4 @@ public class CircularListTest {
         circularList.reset();
         assertEquals(Optional.of(1), circularList.next());
     }
-
-
 }
