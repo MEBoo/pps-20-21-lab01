@@ -2,10 +2,10 @@ package lab01.example.model;
 
 public class AbstractBankAccount implements BankAccount {
     protected final AccountHolder holder;
-    //private final double fee=1;
+    private final double fee=0;
     protected double balance;
 
-    public AbstractBankAccount(final double balance, final AccountHolder holder) {
+    public AbstractBankAccount(final AccountHolder holder, final double balance) {
         this.balance = balance;
         this.holder = holder;
     }
@@ -20,12 +20,8 @@ public class AbstractBankAccount implements BankAccount {
         return this.balance;
     }
     
-    /*
     @Override
-    public double getTransactionFee() {
-        return fee;
-    }
-    */
+    public double getTransactionFee() { return this.fee; }
 
     @Override
     public void deposit(final int usrID, final double amount) {

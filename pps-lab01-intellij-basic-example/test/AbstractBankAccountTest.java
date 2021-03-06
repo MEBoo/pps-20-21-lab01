@@ -30,27 +30,27 @@ public abstract class AbstractBankAccountTest {
     @Test
     void testDeposit() {
         bankAccount.deposit(accountHolder.getId(), depositAmount);
-        assertEquals(initialBalance+depositAmount, bankAccount.getBalance());
+        assertEquals(initialBalance+depositAmount-bankAccount.getTransactionFee(), bankAccount.getBalance());
     }
 
     @Test
     void testWrongDeposit() {
         bankAccount.deposit(accountHolder.getId(), depositAmount);
         bankAccount.deposit(2, depositAmount);
-        assertEquals(initialBalance+depositAmount, bankAccount.getBalance());
+        assertEquals(initialBalance+depositAmount-bankAccount.getTransactionFee(), bankAccount.getBalance());
     }
 
     @Test
     void testWithdraw() {
         bankAccount.deposit(accountHolder.getId(), depositAmount);
         bankAccount.withdraw(accountHolder.getId(), withdrawAmount);
-        assertEquals(initialBalance+depositAmount-withdrawAmount, bankAccount.getBalance());
+        assertEquals(initialBalance+depositAmount-withdrawAmount-2*bankAccount.getTransactionFee(), bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
         bankAccount.deposit(accountHolder.getId(), depositAmount);
         bankAccount.withdraw(2, withdrawAmount);
-        assertEquals(initialBalance+depositAmount, bankAccount.getBalance());
+        assertEquals(initialBalance+depositAmount-bankAccount.getTransactionFee(), bankAccount.getBalance());
     }
 }

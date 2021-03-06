@@ -14,5 +14,4 @@ class SimpleBankAccountTest extends AbstractBankAccountTest {
     void setupBankAccount(){
         bankAccount = new SimpleBankAccount(accountHolder, initialBalance);
     }
-
 }

@@ -21,7 +21,7 @@ public interface BankAccount {
      * Returns the transaction fee of the bank account
      * @return the transaction fee
      */
-    //double getTransactionFee();
+    double getTransactionFee();
 
     /**
      * Allows the deposit of an amount on the account, if the given usrID corresponds to the register holder ID
@@ -40,4 +40,6 @@ public interface BankAccount {
      * @param amount the amount of the withdraw
      */
     void withdraw(int usrID, double amount);
+
+
 }
