@@ -21,7 +21,7 @@ public class CircularListTest {
     }
     private void addSequenceOfIntegers(int number, int startElement)
     {
-        for (int i=startElement;i<=number;i++)
+        for (int i=startElement;i<=number+startElement-1;i++)
             circularList.add(i);
     }
 
@@ -42,31 +42,31 @@ public class CircularListTest {
 
     @Test
     public void testSingleAdd() {
-        addSequenceOfIntegers(1, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(1);
         assertEquals(1, circularList.size());
     }
 
     @Test
     public void testMultipleAdd() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
         assertEquals(SEQUENCE_SIZE, circularList.size());
     }
 
     @Test
     public void testNotEmpty() {
-        addSequenceOfIntegers(1, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(1);
         assertFalse(circularList.isEmpty());
     }
 
     @Test
     public void testSimpleNext() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
         assertEquals(Optional.of(1), circularList.next());
     }
 
     @Test
     public void testMultipleNext() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
 
         for (int i=0;i<2*SEQUENCE_SIZE;i++)
             assertEquals(Optional.of(i%SEQUENCE_SIZE+1), circularList.next());
@@ -74,21 +74,33 @@ public class CircularListTest {
 
     @Test
     public void testSimplePrevious() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
         assertEquals(Optional.of(SEQUENCE_SIZE), circularList.previous());
     }
 
     @Test
     public void testMultiplePrevious() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
 
         for (int i=0;i<2*SEQUENCE_SIZE;i++)
             assertEquals(Optional.of(i>=SEQUENCE_SIZE?2*SEQUENCE_SIZE-i:SEQUENCE_SIZE-i), circularList.previous());
     }
 
     @Test
+    public void testReset() {
+        addSequenceOfIntegers(SEQUENCE_SIZE);
+
+        // Skip some elements
+        for (int i=0;i<3;i++)
+            circularList.next();
+
+        circularList.reset();
+        assertEquals(Optional.of(1), circularList.next());
+    }
+
+    @Test
     public void testMixedUsage() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
+        addSequenceOfIntegers(SEQUENCE_SIZE);
 
         assertEquals(Optional.of(SEQUENCE_SIZE), circularList.previous());
         assertEquals(Optional.of(1), circularList.next());
@@ -98,21 +110,16 @@ public class CircularListTest {
         assertEquals(Optional.of(3), circularList.next());
         assertEquals(Optional.of(2), circularList.previous());
 
-        //Next() until the last element of the first sequence added.
+        // Next() until the last element of the first sequence added.
         for (int i=3;i<=SEQUENCE_SIZE;i++)
             assertEquals(Optional.of(i), circularList.next());
 
-        //Next() on the second sequence added
+        // Next() on the second sequence added
+        assertEquals(Optional.of(SEQUENCE_SIZE+1), circularList.next());
+        assertEquals(Optional.of(SEQUENCE_SIZE+2), circularList.next());
+
+        circularList.reset();
         assertEquals(Optional.of(1), circularList.next());
-        assertEquals(Optional.of(2), circularList.next());
-    }
-
-    @Test
-    public void testReset() {
-        addSequenceOfIntegers(SEQUENCE_SIZE, SEQUENCE_SIZE + 1);
-
-        for (int i=0;i<3;i++)
-            assertEquals(Optional.of(i), circularList.next());
     }
 
 
