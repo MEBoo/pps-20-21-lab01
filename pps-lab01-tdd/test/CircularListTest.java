@@ -68,7 +68,18 @@ public class CircularListTest {
             assertEquals(Optional.of(i%100+1), circularList.next());
     }
 
+    @Test
+    public void testSimplePrevious() {
+        addSequenceOfIntegers(100);
+        assertEquals(Optional.of(100), circularList.previous());
+    }
 
+    @Test
+    public void testMultiplePrevious() {
+        addSequenceOfIntegers(100);
 
+        for (int i=0;i<200;i++)
+            assertEquals(Optional.of(i>=100?200-i:100-i), circularList.previous());
+    }
 
 }
