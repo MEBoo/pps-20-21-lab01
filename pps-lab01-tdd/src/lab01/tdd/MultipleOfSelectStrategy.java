@@ -3,12 +3,12 @@ package lab01.tdd;
 public class MultipleOfSelectStrategy implements SelectStrategy {
     private final int multiplier;
     
-    public MultipleOfSelectStrategy(int multiplier) {
+    public MultipleOfSelectStrategy(final int multiplier) {
         this.multiplier=multiplier;
     }
 
     @Override
-    public boolean apply(int element) {
+    public boolean apply(final int element) {
         return element % this.multiplier == 0;
     }
 }

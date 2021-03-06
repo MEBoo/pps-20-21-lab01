@@ -11,8 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CircularListTest {
 
-    static final int SEQUENCE_SIZE=100;
+    static final int SEQUENCE_SIZE=100; // sequence size >= 10
     private CircularList circularList;
+    private final SelectStrategyFactory strategyFactory = new SelectStrategyFactoryImpl();
 
     private void addSequenceOfIntegers(int number)
     {
@@ -79,34 +80,45 @@ public class CircularListTest {
     @Test
     public void testNextWithEvenSelectStrategy() {
         addSequenceOfIntegers(SEQUENCE_SIZE);
-        assertEquals(Optional.of(2), circularList.next(new EvenSelectStrategy()));
-        assertEquals(Optional.of(4), circularList.next(new EvenSelectStrategy()));
+
+        final SelectStrategy strategy=strategyFactory.createEvenStrategy();
+
+        assertEquals(Optional.of(2), circularList.next(strategy));
+        assertEquals(Optional.of(4), circularList.next(strategy));
     }
 
     @Test
     public void testNextWithMultipleOfSelectStrategy() {
         addSequenceOfIntegers(SEQUENCE_SIZE);
-        assertEquals(Optional.of(3), circularList.next(new MultipleOfSelectStrategy(3)));
-        assertEquals(Optional.of(6), circularList.next(new MultipleOfSelectStrategy(3)));
+
+        final SelectStrategy strategy=strategyFactory.createMultipleOfStrategy(3);
+
+        assertEquals(Optional.of(3), circularList.next(strategy));
+        assertEquals(Optional.of(6), circularList.next(strategy));
     }
 
     @Test
     public void testNextWithEqualsSelectStrategy() {
         addSequenceOfIntegers(SEQUENCE_SIZE);
-        assertEquals(Optional.of(5), circularList.next(new EqualsSelectStrategy(5)));
+
+        final SelectStrategy strategy=strategyFactory.createEqualsStrategy(5);
+
+        assertEquals(Optional.of(5), circularList.next(strategy));
     }
 
     @Test
     public void testCircularNextWithEqualsSelectStrategy() {
         addSequenceOfIntegers(SEQUENCE_SIZE);
 
+        final SelectStrategy strategy=strategyFactory.createEqualsStrategy(SEQUENCE_SIZE);
+
         // Find 2 times same value
-        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE)));
-        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE)));
+        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(strategy));
+        assertEquals(Optional.of(SEQUENCE_SIZE), circularList.next(strategy));
 
         // Find a near last element and then a near first one
-        assertEquals(Optional.of(SEQUENCE_SIZE-5), circularList.next(new EqualsSelectStrategy(SEQUENCE_SIZE-5)));
-        assertEquals(Optional.of(5), circularList.next(new EqualsSelectStrategy(5)));
+        assertEquals(Optional.of(SEQUENCE_SIZE-2), circularList.next(strategyFactory.createEqualsStrategy(SEQUENCE_SIZE-2)));
+        assertEquals(Optional.of(2), circularList.next(strategyFactory.createEqualsStrategy(2)));
     }
 
     @Test
