@@ -59,6 +59,11 @@ public class CircularListTest {
     }
 
     @Test
+    public void testEmptyNext() {
+        assertEquals(Optional.empty(), circularList.next());
+    }
+
+    @Test
     public void testSimpleNext() {
         addSequenceOfIntegers(SEQUENCE_SIZE);
         assertEquals(Optional.of(1), circularList.next());
@@ -70,6 +75,11 @@ public class CircularListTest {
 
         for (int i=0;i<2*SEQUENCE_SIZE;i++)
             assertEquals(Optional.of(i%SEQUENCE_SIZE+1), circularList.next());
+    }
+
+    @Test
+    public void testEmptyPrevious() {
+        assertEquals(Optional.empty(), circularList.previous());
     }
 
     @Test
